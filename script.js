@@ -1,8 +1,9 @@
 function byteSize(str) {
-  return Buffer.byteLength(str, 'utf8');
+  if (typeof Blob !== "undefined") {
+    // Browser / Node 15+ with Blob support
+    return new Blob([str]).size;
+  } else {
+    // Node.js fallback
+    return Buffer.byteLength(str, 'utf8');
+  }
 }
-
-// Examples:
-console.log(byteSize("hello world")); // 11
-console.log(byteSize("안녕하세요"));   // 15
-console.log(byteSize(""));            // 0
