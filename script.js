@@ -1,9 +1,19 @@
-function byteSize(str) {
-  if (typeof Blob !== "undefined") {
-    // Browser / Node 15+ with Blob support
-    return new Blob([str]).size;
-  } else {
-    // Node.js fallback
-    return Buffer.byteLength(str, 'utf8');
-  }
-}
+const readline = require("readline");
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+let input = [];
+
+rl.on("line", function(line) {
+    input.push(line.trim());
+}).on("close", function() {
+    let str = input[0] || "";   // handle empty string case
+    
+    function byteSize(s) {
+        return Buffer.byteLength(s, 'utf8');
+    }
+
+    console.log(byteSize(str));
+});
